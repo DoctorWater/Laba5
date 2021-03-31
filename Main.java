@@ -10,18 +10,17 @@ import java.util.regex.Pattern;
 public class Main {
 
     public static void main(String[] args) throws IOException, JsonException {
-        Integer i=0;
         boolean exit=false;
         String buffer = null, filename=null;
         Scanner in = new Scanner(System.in);
-        Hashtable products=LoadFromFile.loadFromFile(filename,i);
+        Hashtable<Long, Product> products= Parce.parse("C:\\Users\\malck\\OneDrive\\Рабочий стол\\Лабы\\Laba5\\src\\main\\java\\AllProducts.json");
+        System.out.println(products.isEmpty());
         ArrayList<String> commands = new ArrayList<String>();
-        Pattern pattern = Pattern.compile("[insert ]+\\d+");
-        Matcher matcher = pattern.matcher(buffer);
         while (exit==false)
         {
             System.out.println("ВВЕДИТЕ КОМАНДУ (ВВЕДИТЕ help ДЛЯ ПОЛУЧЕНИЯ СПИСКА КОМАНД): ");
             buffer=in.nextLine();
+            Scanner scanner = new Scanner(buffer);
             switch (buffer) {
                 case "help":
                     HelpCommand.help();
@@ -34,16 +33,41 @@ public class Main {
                     System.out.println(products.toString());
                     commands.add("show");
                     break;
-                case matcher.find():
-                    products.put(,null);
+                case "print":
+                    products.get(0);
+                    commands.add("print");
                     break;
-                case 5:
-                case 6:
+                case "clear":
+                    products.clear();
                     break;
-                case 7:
-                case 8:
+                case "refactor":
+                    CreateNewProduct.createProduct(products);
+                case "exit":
+                    System.exit(0);
                     break;
+                case "history":
+                    for(int i= commands.size()-1; i>0;i--)
+                    System.out.println(commands.get(i));
                 default:
+                    if(scanner.findInLine("^insert+\\s+")!=null) {
+                        buffer = scanner.findInLine("\\d+");
+                        try {
+                            products.put(Long.parseLong(buffer), CreateNewProduct.createProduct(products));
+                            commands.add("insert");
+                        } catch (NumberFormatException e) {
+                            System.out.println("Неверный ключ!");
+                        }
+                    }
+                    if(scanner.findInLine("^remove+\\s+")!=null){
+                        buffer = scanner.findInLine("\\d+");
+                        try {
+                            products.remove(Long.parseLong(buffer));
+                            commands.add("remove");
+                        } catch (NumberFormatException e) {
+                            System.out.println("Неверный ключ!");
+                        }
+                    }
+
                     break;
             }
         }
