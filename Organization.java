@@ -1,9 +1,11 @@
+import java.util.Hashtable;
+import java.util.Random;
+
 public class Organization implements StructureInterface {
     private Long id;
     private String name;
     private Float annualTurnover;
     private OrganizationType type;
-
     public void setAnnualTurnover(Float annualTurnover) {
         this.annualTurnover = annualTurnover;
     }
@@ -16,6 +18,18 @@ public class Organization implements StructureInterface {
         this.name = name;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public Float getAnnualTurnover() {
+        return annualTurnover;
+    }
+
+    public String getType() {
+        return type.toString();
+    }
+
     @Override
     public String getName() {
         return name;
@@ -23,5 +37,15 @@ public class Organization implements StructureInterface {
 
     public void stringToEnum(String type) {
         this.type = OrganizationType.valueOf(type);
+    }
+    public static Long checkId(Hashtable<String, Product> table) {
+        Random random = new Random();
+        final Long[] id = new Long[1];
+        id[0] = random.nextLong();
+        table.forEach((k, v)->{
+            if (v.getOrganization().getId()== id[0])
+                id[0] = random.nextLong();
+        });
+        return id[0];
     }
 }

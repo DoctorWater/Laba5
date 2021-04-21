@@ -4,18 +4,22 @@ import com.github.cliftonlabs.json_simple.Jsonable;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Random;
 
-public class Product implements Jsonable, StructureInterface {
-    Product(Long id, String name, Coordinates coordinates, Long price, String partNumber, String unitOfMeasure, Organization manufacturer) {
+public class Product  {
+
+    public Product(Long id, String name, Coordinates coordinates, Long price, Date creationDate, String partNumber, String unitOfMeasure, Organization manufacturer, String key) {
         this.id=id;
         this.name=name;
         this.coordinates=coordinates;
+        this.creationDate=creationDate;
         this.price=price;
         this.partNumber=partNumber;
         this.unitOfMeasure = UnitOfMeasure.valueOf(unitOfMeasure);
         this.manufacturer=manufacturer;
+        this.key=key;
     }
 
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -26,16 +30,19 @@ public class Product implements Jsonable, StructureInterface {
     private String partNumber; //Строка не может быть пустой, Длина строки не должна быть больше 86, Значение этого поля должно быть уникальным, Поле может быть null
     private UnitOfMeasure unitOfMeasure; //Поле может быть null
     private Organization manufacturer; //Поле не может быть null
+    private String key;
 
     public Long getId() { return id; }
 
 
-    public static Long checkId(Hashtable<Long, Product> table) {
-        final long[] id = {0};
-        id[0] = ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
+    public static Long checkId(Hashtable<String, Product> table) {
+        Random random = new Random();
+        final Long[] id = new Long[1];
+        id[0] = random.nextLong();
         table.forEach((k, v)->{
-            if (v.getId()== id[0])
-                id[0] =ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
+            if (v.getId().equals(id[0]))
+                id[0] = random.nextLong();
+
         });
         return id[0];
     }
@@ -44,11 +51,11 @@ public class Product implements Jsonable, StructureInterface {
         return name;
     }
 
-    @Override
+
     public void setName(String name) {
         this.name = name;
     }
-
+    public String getKey() { return key; }
     public Coordinates getCoordinates() {
         return coordinates;
     }
@@ -67,19 +74,10 @@ public class Product implements Jsonable, StructureInterface {
     public UnitOfMeasure getUnitOfMeasure() {
         return unitOfMeasure;
     }
-
-
-    @Override
-    public String toJson() {
-        final StringWriter writable = new StringWriter();
-        try {
-            this.toJson(writable);
-        } catch (final IOException e) {
-        }
-        return writable.toString();
-    }
-
-    @Override
+    public Integer getX(){ return coordinates.getX();}
+    public int getY(){ return coordinates.getY();}
+    public String getUnitOfMeasureString(){return unitOfMeasure.toString();}
+    public Organization getOrganization (){return manufacturer;}
     public void toJson(Writer writer) throws IOException {
 
         final JsonObject json = new JsonObject();
@@ -95,7 +93,11 @@ public class Product implements Jsonable, StructureInterface {
 
     }
 
-    @Override
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+
     public void stringToEnum(String s) {
         this.unitOfMeasure=unitOfMeasure.valueOf(s);
     }

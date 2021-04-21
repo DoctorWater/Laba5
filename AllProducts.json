@@ -1,17 +1,53 @@
 {
-  "id": "2113544456",
-  "name": "Kator",
-  "coordinates": [
-  "32",
-  "55"
+"id": "4333255869834198147",
+"name": "dfer",
+"coordinates": [
+"3",
+"4"
 ],
-  "price": "555",
-  "partNumber": "333",
-  "unitOfMeasure": "SQUARE_METERS",
-  "manufacturer": [
-    "544698482",
-    "Huila",
-    "5655.2344",
-    "TRUST"
-  ]
+"date": "20-04-2021",
+"price": "45345",
+"price": "234234",
+"unitOfMeasure": "GRAMS",
+"manufacturer": [
+"7884841403356914188",
+"3323",
+"4234.0",
+"TRUST"
+],
+"key": "troya",
+"id": "2123791092497920558",
+"name": "fgre",
+"coordinates": [
+"2",
+"34"
+],
+"date": "20-04-2021",
+"price": "3342",
+"price": "32",
+"unitOfMeasure": "PCS",
+"manufacturer": [
+"6167018322848137365",
+"ght",
+"4.0",
+"TRUST"
+],
+"key": "SomeString2",
+"id": "5649863886276038149",
+"name": "fger",
+"coordinates": [
+"3",
+"4"
+],
+"date": "20-04-2021",
+"price": "234",
+"price": "2342",
+"unitOfMeasure": "GRAMS",
+"manufacturer": [
+"771687109016685016",
+"bfgdbrfg",
+"3423.0",
+"PUBLIC"
+],
+"key": "SameShit"
 }
