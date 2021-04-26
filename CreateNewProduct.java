@@ -19,25 +19,64 @@ public class CreateNewProduct {
         Date dateNow=new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String name = null;
-        try {
+        while (true) {
+            try {
                 System.out.println("Пожалуйста, введите название");
                 name = in.nextLine();
-                if(name==null) {
+                if (name == null | name=="") {
                     throw new IllegalArgumentException();
                 }
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Неверное имя!");
+            }
+        }
+        while (true) {
+            try {
                 System.out.println("Введите значение X");
                 x = in.nextInt();
-                if(x==null) {
+                if (x == null) {
                     throw new IllegalArgumentException();
                 }
+                break;
+            }
+            catch (IllegalArgumentException | InputMismatchException e){
+                System.out.println("Неверное значение X!");
+                in.nextLine();
+            }
+        }
+        while (true) {
+            try {
                 System.out.println("Введите значение Y");
                 y = in.nextInt();
-                coordinates.setX(x);
-                coordinates.setY(y);
+                if (y>775) {
+                    throw new IllegalArgumentException();
+                }
+                break;
+            }
+            catch (IllegalArgumentException | InputMismatchException e){
+                System.out.println("Неверное значение Y!");
+                in.nextLine();
+            }
+        }
+        coordinates.setX(x);
+        coordinates.setY(y);
+        while (true) {
+            try {
                 System.out.println("Введите значение цены");
                 price = in.nextLong();
-                System.out.println(price);
-                System.out.println("Вывести unit = " + unit);
+                if (price<=0) {
+                    throw new IllegalArgumentException();
+                }
+                break;
+            }
+            catch (IllegalArgumentException | InputMismatchException e){
+                System.out.println("Неверное значение цены!");
+                in.nextLine();
+            }
+        }
+        while (true) {
+            try {
                 System.out.println("Введите единицу измерения. Варианты: \n" +
                         "SQUARE_METERS,\n" +
                         "    PCS,\n" +
@@ -45,24 +84,32 @@ public class CreateNewProduct {
                         "    MILLILITERS,\n" +
                         "    GRAMS");
                 in.nextLine();
-                unit=in.nextLine();
+                unit = in.next();
                 if (!unit.equals("SQUARE_METERS") && !unit.equals("PCS") && !unit.equals("LITERS") && !unit.equals("MILLILITERS") && !unit.equals("GRAMS"))
                     throw new IllegalArgumentException();
-                if(unit==null) {
-                    throw new IllegalArgumentException();
-                }
+                break;
+            }
+            catch (IllegalArgumentException e){
+                System.out.println("Неверное значение единицы измерения!");
+                in.nextLine();
+            }
+        }
+        try {
+            while(true) {
                 System.out.println("Введите номер части");
                 partNumber = in.nextLine();
-                Organization organization = CreateNewOrganization.createOrganization(table);
-                Product product = new Product(Product.checkId(table),name,coordinates,price,dateNow,partNumber,unit,organization,key);
-                table.put(key,product);
-            } catch (IllegalArgumentException | InputMismatchException e) {
-                System.out.println("Введенное значение неверно! Повторите ввод");
-                CreateNewProduct.createProduct(table,key);
+                if (!Checkers.CheckPartNumber.check(table, partNumber))
+                    throw new IllegalArgumentException("Номер части не уникален или null");
+                else
+                    break;
             }
-
-
-
+        }
+        catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+        Organization organization = CreateNewOrganization.createOrganization(table);
+        Product product = new Product(Product.checkId(table),name,coordinates,price,dateNow,partNumber,unit,organization,key);
+        table.put(key,product);
        return table;
     }
 }

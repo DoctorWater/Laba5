@@ -56,7 +56,18 @@ public class Parce {
                         scanner = new Scanner(s.get(j+8));
                         String partNumber = scanner.findInLine("\\:\\s*\\\"\\w*\\\"");
                         scanner = new Scanner(partNumber);
-                        partNumber=scanner.findInLine("\\w+");
+                        while (true) {
+                            try {
+                                partNumber = scanner.findInLine("\\w+");
+                                if (!Checkers.CheckPartNumber.check(hashtable, partNumber)) {
+                                    throw new IllegalArgumentException("Повторяющееся значение номера части или номер части пуст!");
+                                }
+                                else
+                                    break;
+                            } catch (IllegalArgumentException e) {
+                                e.getMessage();
+                            }
+                        }
                         scanner = new Scanner(s.get(j+9));
                         String unitOfMeasure = scanner.findInLine("\\:\\s*\\\"\\w*\\\"");
                         scanner = new Scanner(unitOfMeasure);

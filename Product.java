@@ -1,14 +1,10 @@
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsonable;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Random;
 
-public class Product  {
+public class Product {
 
     public Product(Long id, String name, Coordinates coordinates, Long price, Date creationDate, String partNumber, String unitOfMeasure, Organization manufacturer, String key) {
         this.id=id;
@@ -78,26 +74,9 @@ public class Product  {
     public int getY(){ return coordinates.getY();}
     public String getUnitOfMeasureString(){return unitOfMeasure.toString();}
     public Organization getOrganization (){return manufacturer;}
-    public void toJson(Writer writer) throws IOException {
-
-        final JsonObject json = new JsonObject();
-        json.put("id", this.getId());
-        json.put("name", this.name);
-        json.put("coordinates", this.getCoordinates());
-        json.put("date", this.getCreationDate());
-        json.put("price", this.getPrice());
-        json.put("PartNumber", this.partNumber);
-        json.put("Manufacturer", this.manufacturer);
-        json.put("UnitOfMeasure",this.unitOfMeasure);
-        json.toJson(writer);
-
-    }
-
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
-
-
     public void stringToEnum(String s) {
         this.unitOfMeasure=unitOfMeasure.valueOf(s);
     }
