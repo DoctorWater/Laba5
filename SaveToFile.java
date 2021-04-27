@@ -31,7 +31,7 @@ public class SaveToFile {
                     writer.write("],"+ "\n");
                     writer.write("\"date\": " + "\"" + formatForDate.format(v.getCreationDate()) + "\","+ "\n");
                     writer.write("\"price\": " + "\"" + v.getPrice() + "\","+ "\n");
-                    writer.write("\"price\": " + "\"" + v.getPartNumber() + "\","+ "\n");
+                    writer.write("\"partNumber\": " + "\"" + v.getPartNumber() + "\","+ "\n");
                     writer.write("\"unitOfMeasure\": " + "\"" + v.getUnitOfMeasure() + "\","+ "\n");
                     writer.write("\"manufacturer\": ["+ "\n");
                     writer.write("\"" + v.getManufacturer().getId() + "\","+ "\n");

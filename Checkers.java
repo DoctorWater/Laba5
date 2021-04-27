@@ -6,6 +6,8 @@ public class Checkers {
             if (partNumber==null) {
                 checker[0] = 0;
             }
+            if (partNumber.length()>86)
+                checker[0]=0;
             productHashtable.forEach((k, v) -> {
                 if (v.getPartNumber().equals(partNumber))
                     checker[0] = 0;

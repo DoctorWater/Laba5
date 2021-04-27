@@ -20,7 +20,7 @@ public class DetermineCommand {
                 products.clear();
                 break;
             case "refactor":
-                CompareProducts.compare(products);
+                System.out.println(scanner.findInLine("\\d{10123,12322}"));
                 break;
             case "exit":
                 System.exit(0);

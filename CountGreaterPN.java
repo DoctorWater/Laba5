@@ -11,6 +11,6 @@ public class CountGreaterPN {
                 counter++;
             }
         }
-        System.out.println("количество элементов, значение поля partNumber которых больше заданного: " + counter);
+        System.out.println("Количество элементов, значение поля partNumber которых больше заданного: " + counter);
     }
 }
