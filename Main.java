@@ -13,7 +13,7 @@ public class Main {
                 String buffer = "", bufferIfer;
                 Scanner scanner = new Scanner(buffer);
                 System.out.println("Пожалуйста, введите имя файла (желательно, полное)");
-                buffer = in.nextLine(); //"C:\\Users\\malck\\OneDrive\\Документы\\Лабы\\Laba5\\src\\main\\java\\AllProducts.json"
+                buffer = in.nextLine(); //"C:\Users\malck\OneDrive\Документы\Лабы\Laba5\src\main\java\AllProducts.json"
                 if (scanner.findInLine("^\\/dev\\S*") != null)
                     throw new IllegalVarValue("Адрес файла неверен!");
                 String filename = buffer;

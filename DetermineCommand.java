@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public class DetermineCommand {
     public static Hashtable<String, Product> command(String c, Hashtable<String, Product> products, String filename, ArrayList<String> commands, ArrayList<String> previousFilenames) throws IOException, RecursionExeption {
+        System.out.println(c);
         Scanner scanner = new Scanner(c);
+        try{
         switch (c) {
             case "help":
                 HelpCommand.help();
@@ -37,16 +39,16 @@ public class DetermineCommand {
                 SaveToFile.save(filename, products);
                 break;
             default:
-                if (scanner.findInLine("^insert+\\s+") != null) {
-                    scanner = new Scanner(c);
+                if (scanner.findInLine("^insert+\\s+\\w+") != null) {
+                    try {
+                        scanner = new Scanner(c);
                     c = scanner.findInLine("\\s+\\w+\\s*");
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\w+");
-                    try {
 
                         products = CreateNewProduct.createProduct(products, c);
                         System.out.println(products.toString());
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException|NullPointerException e) {
                         System.out.println("Неверный ключ!");
                     }
                 }
@@ -60,20 +62,20 @@ public class DetermineCommand {
                     } catch (NumberFormatException e) {
                         System.out.println("Неверный ключ!");
                     }
-                }
-                if (scanner.findInLine("^update+\\s+") != null) {
+                }try {
+                if (scanner.findInLine("^update+\\s+\\w+") != null) {
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\s+\\w+\\s*");
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\w+");
-                    try {
+
                         String key = SearchId.search(products, c);
                         products.remove(key);
                         products = CreateNewProduct.createProduct(products, key);
-                    } catch (NumberFormatException e1) {
-                        System.out.println("Неверный ID!");
                     }
-                }
+                }catch (NumberFormatException e1) {
+                System.out.println("Неверный ID!");
+            }
                 if (scanner.findInLine("^execute_script+\\s+") != null) {
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\s+\\S+");
@@ -109,19 +111,19 @@ public class DetermineCommand {
                     c = scanner.findInLine("\\w+");
                     try {
                         CountGreaterPN.count(products, Integer.parseInt(c));
-                    }
-                    catch (NumberFormatException e)
-                    {
+                    } catch (NumberFormatException e) {
                         System.out.println("Неверное сравнительное значение!");
-                    }
-                    catch (NoSuchElementException e) {
+                    } catch (NoSuchElementException e) {
                         System.out.println("Нажато Ctrl+D, программа завершена!");
                         System.exit(0);
                     }
-                }
                     break;
                 }
-
+        }
+        }
+        catch (NullPointerException e){
+            System.out.println("Аргумент пуст!");
+        }
         return products;
         }
 

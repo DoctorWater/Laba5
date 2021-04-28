@@ -31,7 +31,7 @@ public class CreateNewProduct {
         while (true) {
             try {
                 System.out.println("Введите значение X");
-                x = in.nextInt();
+                x = Integer.parseInt(in.nextLine());
                 if (x == null) {
                     throw new NullPointerException();
                 }
@@ -45,7 +45,7 @@ public class CreateNewProduct {
         while (true) {
             try {
                 System.out.println("Введите значение Y");
-                y = in.nextInt();
+                y = Integer.parseInt(in.nextLine());
                 if (y>775) {
                     throw new IllegalVarValue();
                 }
@@ -61,8 +61,8 @@ public class CreateNewProduct {
         while (true) {
             try {
                 System.out.println("Введите значение цены");
-                price = in.nextLong();
-                if (price<=0) {
+                price = Long.parseLong(in.nextLine());
+                if ((price<=0) | (price==null)) {
                     throw new IllegalVarValue();
                 }
                 break;
