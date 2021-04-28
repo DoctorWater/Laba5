@@ -1,9 +1,6 @@
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class CreateNewProduct {
     public static Hashtable<String,Product> createProduct(Hashtable<String, Product> table, String key) throws IllegalArgumentException, InputMismatchException {
@@ -106,6 +103,10 @@ public class CreateNewProduct {
         }
         catch(IllegalArgumentException | NullPointerException | IllegalVarValue e){
             System.out.println("Номер части не уникален или null");
+        }
+        catch (NoSuchElementException e) {
+            System.out.println("Нажато Ctrl+D, программа завершена!");
+            System.exit(0);
         }
         Organization organization = CreateNewOrganization.createOrganization(table);
         Product product = new Product(Product.checkId(table),name,coordinates,price,dateNow,partNumber,unit,organization,key);

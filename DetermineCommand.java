@@ -1,10 +1,11 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class DetermineCommand {
-    public static Hashtable<String, Product> command(String c, Hashtable<String, Product> products, String filename, ArrayList<String> commands) throws IOException, RecursionExeption {
+    public static Hashtable<String, Product> command(String c, Hashtable<String, Product> products, String filename, ArrayList<String> commands, ArrayList<String> previousFilenames) throws IOException, RecursionExeption {
         Scanner scanner = new Scanner(c);
         switch (c) {
             case "help":
@@ -49,7 +50,7 @@ public class DetermineCommand {
                         System.out.println("Неверный ключ!");
                     }
                 }
-                if (scanner.findInLine("^remove+\\s+") != null) {
+                if (scanner.findInLine("^remove_key+\\s+") != null) {
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\s+\\w+\\s*");
                     scanner = new Scanner(c);
@@ -73,12 +74,12 @@ public class DetermineCommand {
                         System.out.println("Неверный ID!");
                     }
                 }
-                if (scanner.findInLine("^execute+\\s+") != null) {
+                if (scanner.findInLine("^execute_script+\\s+") != null) {
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\s+\\S+");
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\S+");
-                    ExecuteCommand.execute(c, new ArrayList<String>(), products, filename, commands);
+                    ExecuteCommand.execute(c, previousFilenames, products, filename, commands);
                 }
                 if (scanner.findInLine("^filter_greater_than_unit_of_measure+\\s+") != null) {
                     scanner = new Scanner(c);
@@ -112,6 +113,10 @@ public class DetermineCommand {
                     catch (NumberFormatException e)
                     {
                         System.out.println("Неверное сравнительное значение!");
+                    }
+                    catch (NoSuchElementException e) {
+                        System.out.println("Нажато Ctrl+D, программа завершена!");
+                        System.exit(0);
                     }
                 }
                     break;

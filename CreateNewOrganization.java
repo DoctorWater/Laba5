@@ -1,6 +1,7 @@
 
 import java.util.Hashtable;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class CreateNewOrganization {
@@ -52,6 +53,10 @@ public class CreateNewOrganization {
             catch (IllegalArgumentException | IllegalVarValue e){
                 System.out.println("Неверное значение единицы измерения!");
                 in.nextLine();
+            }
+            catch (NoSuchElementException e) {
+                System.out.println("Нажато Ctrl+D, программа завершена!");
+                System.exit(0);
             }
         }
         organization.stringToEnum(type);
