@@ -15,8 +15,8 @@ public class Parce {
     private static final ArrayList<String> s = new ArrayList<>();
     private static final Hashtable<String, Product> hashtable = new Hashtable<>();
     private static final Date date = new Date();
-
-    public static Hashtable<String,Product> parse(String filename) throws RecursionExeption, IllegalVarValue, IOException {
+    private static Scanner in = new Scanner(System.in);
+    public static Hashtable<String,Product> parse(String filename, String[] args) throws RecursionExeption, IllegalVarValue, IOException {
             s.clear();
         try {
                 BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -140,10 +140,10 @@ public class Parce {
                     }
         } catch (FileNotFoundException e) {
             System.out.println("Неверный адрес файла!");
-            Main.main(null);
+            System.exit(0);
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка парсинга!");
-            Main.main(null);
+            Main.main(args);
         }
         return hashtable;
     }

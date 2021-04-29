@@ -8,16 +8,15 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args){
+
         Scanner in = new Scanner(System.in);
             try {
-                String buffer = "", bufferIfer;
+                String buffer = "G:\\Laba5\\src\\main\\java\\AllProducts.json", bufferIfer;
                 Scanner scanner = new Scanner(buffer);
-                System.out.println("Пожалуйста, введите имя файла (желательно, полное)");
-                buffer = in.nextLine(); //"C:\Users\malck\OneDrive\Документы\Лабы\Laba5\src\main\java\AllProducts.json"
                 if (scanner.findInLine("^\\/dev\\S*") != null)
                     throw new IllegalVarValue("Адрес файла неверен!");
                 String filename = buffer;
-                Hashtable<String, Product> products = Parce.parse(filename);
+                Hashtable<String, Product> products = Parce.parse(filename, args);
                 ArrayList<String> commands = new ArrayList<>();
                 while (true) {
                     System.out.println("ВВЕДИТЕ КОМАНДУ (ВВЕДИТЕ help ДЛЯ ПОЛУЧЕНИЯ СПИСКА ИСПОЛНЯЕМЫХ КОМАНД): ");
@@ -29,10 +28,14 @@ public class Main {
                     }
                     products = DetermineCommand.command(buffer, products, filename, commands, new ArrayList<>());
                 }
-            } catch (IllegalVarValue | IOException | RecursionExeption e) {
+            } catch (IllegalVarValue | IOException | RecursionExeption | NullPointerException e) {
                 System.out.println(e.getMessage());
             } catch (NoSuchElementException e) {
                 System.out.println("Нажато Ctrl+D, программа завершена!");
+                System.exit(0);
+            }
+            catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Вы не передали адрес файла *.json!");
                 System.exit(0);
             }
     }

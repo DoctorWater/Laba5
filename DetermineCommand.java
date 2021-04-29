@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class DetermineCommand {
     public static Hashtable<String, Product> command(String c, Hashtable<String, Product> products, String filename, ArrayList<String> commands, ArrayList<String> previousFilenames) throws IOException, RecursionExeption {
-        System.out.println(c);
         Scanner scanner = new Scanner(c);
         try{
         switch (c) {
@@ -68,7 +67,6 @@ public class DetermineCommand {
                     c = scanner.findInLine("\\s+\\w+\\s*");
                     scanner = new Scanner(c);
                     c = scanner.findInLine("\\w+");
-
                         String key = SearchId.search(products, c);
                         products.remove(key);
                         products = CreateNewProduct.createProduct(products, key);
