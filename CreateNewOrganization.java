@@ -1,4 +1,4 @@
-
+package com.company;
 import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;

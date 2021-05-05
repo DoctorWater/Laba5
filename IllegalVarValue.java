@@ -1,3 +1,4 @@
+package com.company;
 public class IllegalVarValue extends Exception{
     private String message=null;
     public IllegalVarValue(){

@@ -1,3 +1,4 @@
+package com.company;
 public class NoNull extends Exception{
     public NoNull(String message){
         super(message);

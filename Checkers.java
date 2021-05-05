@@ -1,4 +1,7 @@
+package com.company;
+
 import java.util.Hashtable;
+
 public class Checkers {
     public static class CheckPartNumber {
         public static boolean check (Hashtable<String, Product> productHashtable, String partNumber){

@@ -1,3 +1,4 @@
+package com.company;
 public class HelpCommand {
     public static void help(){
         System.out.println("help : вывести справку по доступным командам\n" +

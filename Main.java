@@ -1,3 +1,5 @@
+package com.company;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -6,14 +8,12 @@ import java.util.Scanner;
 
 
 public class Main {
-
     public static void main(String[] args){
-
         Scanner in = new Scanner(System.in);
             try {
-                String buffer = args[0], bufferIfer;
+                String buffer = "D:\\Laba5\\src\\com\\company\\AllProducts.json", bufferIfer;//args[0];
                 Scanner scanner = new Scanner(buffer);
-                if (scanner.findInLine("^\\/dev\\S*") != null)
+                if (scanner.findInLine("^/dev\\S*") != null)
                     throw new IllegalVarValue("Адрес файла неверен!");
                 String filename = buffer;
                 Hashtable<String, Product> products = Parce.parse(filename, args);

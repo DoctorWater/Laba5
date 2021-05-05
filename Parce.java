@@ -1,5 +1,4 @@
-
-
+package com.company;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,7 +9,6 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-
 public class Parce {
     private static final ArrayList<String> s = new ArrayList<>();
     private static final Hashtable<String, Product> hashtable = new Hashtable<>();
@@ -138,7 +136,7 @@ public class Parce {
                             System.exit(0);
                         }
                     }
-        } catch (FileNotFoundException e) {
+        } catch (OutOfMemoryError|FileNotFoundException e) {
             System.out.println("Неверный адрес файла!");
             System.exit(0);
         } catch (IOException | InterruptedException e) {
