@@ -11,7 +11,7 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
             try {
-                String buffer = "G:\\Laba5\\src\\main\\java\\AllProducts.json", bufferIfer;
+                String buffer = args[0], bufferIfer;
                 Scanner scanner = new Scanner(buffer);
                 if (scanner.findInLine("^\\/dev\\S*") != null)
                     throw new IllegalVarValue("Адрес файла неверен!");
