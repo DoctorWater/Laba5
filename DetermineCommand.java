@@ -1,40 +1,39 @@
-package com.company;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DetermineCommand {
-    public static Hashtable<String, Product> command(String c, Hashtable<String, Product> products, String filename, ArrayList<String> commands, ArrayList<String> previousFilenames) throws IOException, RecursionExeption {
+    public static Hashtable<String, Product> command(String c, Hashtable<String, Product> products, String filename, ArrayList<String> commands, ArrayList<String> previousFilenames, Date initializationDate) throws IOException, RecursionExeption {
         Scanner scanner = new Scanner(c);
+
         try {
             switch (c) {
                 case "help":
                     HelpCommand.help();
                     break;
                 case "info":
-                    InfoCommand.info(products);
+                    InfoCommand.info(products, initializationDate);
+                    System.out.println("Команда выполнена!");
                     break;
                 case "show":
                     System.out.println(products.toString());
+                    System.out.println("Команда выполнена!");
                     break;
                 case "clear":
                     products.clear();
-                    break;
-                case "refactor":
-                    System.out.println(scanner.findInLine("\\d{10123,12322}"));
+                    System.out.println("Команда выполнена!");
                     break;
                 case "exit":
                     System.exit(0);
                     break;
                 case "print_field_descending_price":
                     PrintFieldDescendingPrice.print(products);
+                    System.out.println("Команда выполнена!");
                     break;
                 case "history":
                     for (int i = 0; i < commands.size(); i++)
                         System.out.println(commands.get(i));
+                    System.out.println("Команда выполнена!");
                     break;
                 case "save":
                     SaveToFile.save(filename, products);
@@ -49,6 +48,7 @@ public class DetermineCommand {
 
                             products = CreateNewProduct.createProduct(products, c);
                             System.out.println(products.toString());
+                            System.out.println("Команда выполнена!");
                         } catch (NumberFormatException | NullPointerException e) {
                             System.out.println("Неверный ключ!");
                         }
@@ -60,6 +60,7 @@ public class DetermineCommand {
                             c = scanner.findInLine("\\w+");
                             try {
                                 products.remove(c);
+                                System.out.println("Команда выполнена!");
                             } catch (NumberFormatException e) {
                                 System.out.println("Неверный ключ!");
                             }
@@ -73,6 +74,7 @@ public class DetermineCommand {
                                     String key = SearchId.search(products, c);
                                     products.remove(key);
                                     products = CreateNewProduct.createProduct(products, key);
+                                    System.out.println("Команда выполнена!");
 
                                 } catch (NumberFormatException e1) {
                                     System.out.println("Неверный ID!");
@@ -83,7 +85,7 @@ public class DetermineCommand {
                                     c = scanner.findInLine("\\s+\\S+");
                                     scanner = new Scanner(c);
                                     c = scanner.findInLine("\\S+");
-                                    ExecuteCommand.execute(c, previousFilenames, products, filename, commands);
+                                    ExecuteCommand.execute(c, previousFilenames, products, filename, commands, initializationDate);
                                 } else {
                                     if (scanner.findInLine("^filter_greater_than_unit_of_measure+\\s+") != null) {
                                         scanner = new Scanner(c);
@@ -91,6 +93,7 @@ public class DetermineCommand {
                                         scanner = new Scanner(c);
                                         c = scanner.findInLine("\\w+");
                                         FilterGreaterUoM.print(products, c);
+                                        System.out.println("Команда выполнена!");
                                     } else {
                                         if (scanner.findInLine("^remove_greater+\\s+") != null) {
                                             scanner = new Scanner(c);
@@ -98,6 +101,7 @@ public class DetermineCommand {
                                             scanner = new Scanner(c);
                                             c = scanner.findInLine("\\w+");
                                             RemoveCompare.removeGreater(products, c);
+                                            System.out.println("Команда выполнена!");
                                         } else {
                                             if (scanner.findInLine("^remove_lower+\\s+") != null) {
                                                 scanner = new Scanner(c);
@@ -105,6 +109,7 @@ public class DetermineCommand {
                                                 scanner = new Scanner(c);
                                                 c = scanner.findInLine("\\w+");
                                                 RemoveCompare.removeSmaller(products, c);
+                                                System.out.println("Команда выполнена!");
                                             } else {
                                                 if (scanner.findInLine("^count_greater_than_part_number+\\s+") != null) {
                                                     scanner = new Scanner(c);
@@ -113,6 +118,7 @@ public class DetermineCommand {
                                                     c = scanner.findInLine("\\w+");
                                                     try {
                                                         CountGreaterPN.count(products, Integer.parseInt(c));
+                                                        System.out.println("Команда выполнена!");
                                                     } catch (NumberFormatException e) {
                                                         System.out.println("Неверное сравнительное значение!");
                                                     } catch (NoSuchElementException e) {
@@ -140,7 +146,3 @@ public class DetermineCommand {
     }
 
 }
-
-
-
-

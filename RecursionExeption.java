@@ -1,4 +1,3 @@
-package com.company;
 public class RecursionExeption extends Exception {
     private String problemFilename;
     public String getProblemFilename() {

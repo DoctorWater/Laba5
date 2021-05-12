@@ -1,21 +1,23 @@
-package com.company;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 public class Main {
+
     public static void main(String[] args){
+
         Scanner in = new Scanner(System.in);
             try {
-                String buffer = "D:\\Laba5\\src\\com\\company\\AllProducts.json", bufferIfer;//args[0];
+                Date initializationDate = new Date();
+                String buffer = args[0], bufferIfer;
                 Scanner scanner = new Scanner(buffer);
-                if (scanner.findInLine("^/dev\\S*") != null)
-                    throw new IllegalVarValue("Адрес файла неверен!");
                 String filename = buffer;
+                Path filenamePath= Paths.get(filename);
+                if(filenamePath.toRealPath().toString().length()>3 && filenamePath.toRealPath().toString().trim().startsWith("/dev"))
+                    throw new InvalidPathException("","Строка не может быть преобразована в путь!");
                 Hashtable<String, Product> products = Parce.parse(filename, args);
                 ArrayList<String> commands = new ArrayList<>();
                 while (true) {
@@ -26,17 +28,21 @@ public class Main {
                     if (bufferIfer.equals("help") | bufferIfer.equals("info") | bufferIfer.equals("show") | bufferIfer.equals("insert") | bufferIfer.equals("update") | bufferIfer.equals("remove_key") | bufferIfer.equals("clear") | bufferIfer.equals("save") | bufferIfer.equals("execute_script") | bufferIfer.equals("remove_greater") | bufferIfer.equals("remove_lower") | bufferIfer.equals("history") | bufferIfer.equals("count_greater_than_part_number") | bufferIfer.equals("filter_greater_than_unit_of_measure") | bufferIfer.equals("print_field_descending_price")) {
                         commands.add(bufferIfer);
                     }
-                    products = DetermineCommand.command(buffer, products, filename, commands, new ArrayList<>());
+                    products = DetermineCommand.command(buffer, products, filename, commands, new ArrayList<>(), initializationDate);
                 }
-            } catch (IllegalVarValue | IOException | RecursionExeption | NullPointerException e) {
+            } catch (IllegalVarValue | IOException | RecursionExeption e) {
                 System.out.println(e.getMessage());
             } catch (NoSuchElementException e) {
                 System.out.println("Нажато Ctrl+D, программа завершена!");
                 System.exit(0);
             }
             catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Вы не передали адрес файла *.json!");
-                System.exit(0);
+               System.out.println("Вы не передали адрес файла *.json!");
+               System.exit(0);
+            }
+            catch (InvalidPathException e){
+                System.out.println("Имя файла неверно!");
             }
     }
+
 }

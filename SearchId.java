@@ -1,4 +1,3 @@
-package com.company;
 import java.util.Hashtable;
 import java.util.Scanner;
 
